@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+// have to use this for custom annotations in kotlin
+//apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId 'com.machfour.macrosapp2'
+        minSdkVersion 21
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // don't need this with minSdkVerion >= 21
+        //vectorDrawables.useSupportLibrary = true
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        fatal 'StopShip'
+    }
+
+    productFlavors {
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    sourceSets {
+        // somehow the kotlin dir goes into java.srcDirs too
+        main.java.srcDirs = ['src/main/kotlin']
+
+        main.res.srcDirs = [
+                'src/main/res',
+                'src/main/res/main',
+        ]
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+
+    implementation "androidx.appcompat:appcompat:1.3.0-alpha02"
+
+    // KTX
+    implementation "androidx.core:core-ktx:1.5.0-alpha03"
+    implementation "androidx.activity:activity-ktx:1.2.0-alpha08"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"
+    implementation 'androidx.preference:preference-ktx:1.1.1'
+
+    // Lifecycle KTX
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
+    // Lifecycle Java
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$rootProject.lifecycleVersion"
+}
+
+repositories {
+    mavenCentral()
+}
